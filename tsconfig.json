@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "esnext",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "allowJs": true
+    },
+    "paths": {
+        "@/*": [
+            "src/*"
+        ]
+    }
+}

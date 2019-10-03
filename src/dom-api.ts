@@ -1,8 +1,14 @@
-import htmldomapi from 'snabbdom/htmldomapi'
+import htmldomapi, { DOMAPI } from 'snabbdom/htmldomapi'
 
-export default class DOMApi {
-	constructor(rootElm, replayRootElm, logStore) {
-		this.logStore = logStore;
+export default class DOMApi implements DOMAPI {
+	/** 记录操作日志 */
+	public logStore: LogItem[] = [];
+	public eid: number = 0;
+	public replayElm: {
+		[eid: number]: Node,
+	} = {};
+
+	constructor(rootElm, replayRootElm) {
 		this.eid = 0;
 		this.replayElm = {};
 		const eid = this.eid++;
@@ -34,8 +40,8 @@ export default class DOMApi {
 		});
 		return node;
 	}
-	createElementNS(namespaceURI, qualifiedName) {
-
+	createElementNS(namespaceURI, qualifiedName): Element {
+		return htmldomapi.createElementNS(namespaceURI, qualifiedName);
 	}
 	createTextNode(text) {
 		const node = htmldomapi.createTextNode(text);
@@ -101,18 +107,18 @@ export default class DOMApi {
 			type: 'setTextContent',
 			args: [this.getReplayElm(node), text],
 		});
-		return htmldomapi.setTextContent(node);
+		return htmldomapi.setTextContent(node, text);
 	}
 	getTextContent(node) {
 		return htmldomapi.getTextContent(node);
 	}
-	isElement(node) {
+	isElement(node): node is Element {
 		return htmldomapi.isElement(node);
 	}
-	isText(node) {
+	isText(node): node is Text {
 		return htmldomapi.isText(node);
 	}
-	isComment(node) {
+	isComment(node): node is Comment {
 		return htmldomapi.isComment(node);
 	}
 }

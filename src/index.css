@@ -16,4 +16,13 @@
 	border-radius: 50%;
 	text-align: center;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+	vertical-align: middle;
+	transition: all 0.3s linear;
+}
+
+#pending div.hidden,
+#presentation div.hidden,
+#container div.hidden {
+	opacity: 0;
+	transform: translateY(40px);
 }
